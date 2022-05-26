@@ -34,7 +34,7 @@
 
       let apiKey = "HZ_zIw.7-ildQ:X_ljEWn8kmw538lRoaTMKPaPcshSpZhWdYPlNn11LdI";
       let realtime = new Ably.Realtime({ key: apiKey });
-      let channel = realtime.channels.get("testing", params: {rewind: '100'});
+      let channel = realtime.channels.get("testing", { params: { rewind: '100' }});
       window.Connect = function() {};
 
       window.publishAbly = function(name, data) {
