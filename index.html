@@ -34,20 +34,21 @@
           channel = realtime.channels.get(id);
           channel.attach(function(err) {
             channel.history({ untilAttach: true }, function(err, resultPage) {
-              let msgs = resultPage.items;
-              for (let i = 0; i < msgs.length; i++) {
-                if (msgs[i].name == "stop") {
-                  lastTimestampForEnd = msgs[i].timestamp;
-                  break;
-                }
-                if (msgs[i].name == "start") {
-                  for (let j = i; j >= 0; j--) {
-                    sendMsg(msgs[j]);
+              if (resultPage != undefined) { 
+                let msgs = resultPage.items;
+                for (let i = 0; i < msgs.length; i++) {
+                  if (msgs[i].name == "stop") {
+                    lastTimestampForEnd = msgs[i].timestamp;
+                    break;
                   }
-                  break;
+                  if (msgs[i].name == "start") {
+                    for (let j = i; j >= 0; j--) {
+                      sendMsg(msgs[j]);
+                    }
+                    break;
+                  }
                 }
               }
-
               channel.subscribe((msg) => {
                 sendMsg(msg);
               });
